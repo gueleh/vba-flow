@@ -2,6 +2,8 @@
 
 ## Introduction
 
+VBA.Flow() is the name of my way of working with Excel VBA, an approach that evolved over many years. You can learn more about this here: https://vba-flow.net/.
+
 This repository contains a library of solutions based on Excel VBA.
 
 It is being built gradually.

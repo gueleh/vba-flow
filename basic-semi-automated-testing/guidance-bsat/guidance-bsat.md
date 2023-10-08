@@ -1,8 +1,6 @@
----
 Title: Basic Semi-Automated Testing  
 Author: Anders Balari
 toc: true
----
 
 ![][logo-vba-flow-text50h]
 # Basic Semi-Automated Testing

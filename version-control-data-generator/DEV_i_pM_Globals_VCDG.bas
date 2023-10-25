@@ -16,6 +16,7 @@ Attribute VB_Name = "DEV_i_pM_Globals_VCDG"
 '   VERSION HISTORY
 '   Version    Date    Developer    Changes
 '   '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' 0.2.0    25.10.2023    gueleh    Added globals and function for range observation worksheet
 '   0.1.0    24.10.2023    gueleh    Initially created
 '--------------------------------------------------------------------------------------------
 '   BACKLOG
@@ -39,7 +40,9 @@ Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
    'Settings Sheet
 
    'Range Definitions Sheet
-
+      'The Const values are set in method bExportRangeContentData of
+      'DEV_i_C_VersionControlExport as they are only required there
+      'If you need to change them, do it there
 
 'DATA GENERATION SCOPE SETTINGS
    'These settings inform the code about which version control data do have to
@@ -67,13 +70,15 @@ Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
       'with the settings sheets.
    Public Const b_i_p_VCDG_EXPORT_SETTINGS_SHEET_CONTENTS As Boolean = True
 
-   'Export settings stored in settings sheets?
-      'PLEASE NOTE: For this to work the sheets have to meet the
-      'contractual requirements (see guidance) and you also need to
-'TODO: [+] DEV_i_pM_Globals_VCDG:  finish comment
+   'Export contents of named ranges to be included into version control?
+      'PLEASE NOTE: For this to work the sheet and the named ranges have to meet the
+      'contractual requirements (see guidance) and you also need to add the
+      'worksheet containing the parameters to the function below
    Public Const b_i_p_VCDG_EXPORT_NAMED_RANGE_CONTENTS As Boolean = True
-
-'------------------------------------------------------------------------------------
+   
+   'Export data of references to used libraries
+   Public Const b_i_p_VCDG_EXPORT_PROJECT_REFERENCES As Boolean = True
+   
 ' Procedure Name: oCol_i_p_VCDG_SettingsSheets
 ' Purpose: builds and returns a collection with worksheets which are treated as "settings sheets" during version control data generation
 ' Procedure Kind: Function
@@ -104,4 +109,13 @@ Public Function oCol_i_p_VCDG_SettingsSheets() As Collection
 'Do not change
    End With
    Set oCol_i_p_VCDG_SettingsSheets = oCol
+End Function
+
+' Purpose: provides the worksheet object for the sheet containing the parameters
+' for inclusion of named ranges into version control data
+' 0.2.0    25.10.2023    gueleh    Initially created
+Public Function oWks_i_o_VCDG_RangeSettings() As Worksheet
+'REPLACE THE DEMO SHEET WITH YOUR SHEET CONTAINING THE PARAMETERS
+'FOR INCLUSION OF RANGE CONTENTS IN VERSION CONTROL DATA
+   Set oWks_i_o_VCDG_RangeSettings = wksDemoRangeDefSheet
 End Function

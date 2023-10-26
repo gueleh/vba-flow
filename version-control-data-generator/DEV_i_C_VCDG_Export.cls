@@ -2,12 +2,14 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "DEV_i_C_VersionControlExport"
+Attribute VB_Name = "DEV_i_C_VCDG_Export"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'   NAME:     DEV_i_C_VersionControlExport
+' Package: VersionControlDataGenerator
+'============================================================================================
+'   NAME:     DEV_i_C_VCDG_Export
 '============================================================================================
 '   Purpose:  exports all data relevant for convenient version control
 '   Access:   Private
@@ -15,7 +17,7 @@ Attribute VB_Exposed = False
 '   Author:   Günther Lehner
 '   Contact:  guleh@pm.me
 '   GitHubID: gueleh
-'   Required:
+'   Required: package SETTINGS: i_C_SETTINGS_Item.cls, i_C_SETTINGS_Sheet.cls
 '   Usage:
 '--------------------------------------------------------------------------------------------
 '   VERSION HISTORY
@@ -42,12 +44,12 @@ Public Function bExportRangeContentData() As Boolean
    Dim oWks As Worksheet
    Dim iFileNumber As Integer
    Dim sFileFullPath As String
-   Dim oCSettingsSheet As i_C_SettingsSheet
+   Dim oCSettingsSheet As i_C_SETTINGS_Sheet
    Dim oColSettings As Collection
-   Dim oCSetting As i_C_Setting
+   Dim oCSetting As i_C_SETTINGS_Item
    
-   Dim oCRanges As New DEV_i_C_VersionControlRanges
-   Dim oCRange As DEV_i_C_VersionControlRange
+   Dim oCRanges As New DEV_i_C_VCDG_Ranges
+   Dim oCRange As DEV_i_C_VCDG_Range
    Dim oColRanges As Collection
    Dim lCountRanges As Long
    Dim oRngCell As Range
@@ -134,9 +136,9 @@ Public Function bExportSettingsSheetData() As Boolean
    Dim iFileNumber As Integer
    Dim sFileFullPath As String
    Dim oColSheets As Collection
-   Dim oCSettingsSheet As i_C_SettingsSheet
+   Dim oCSettingsSheet As i_C_SETTINGS_Sheet
    Dim oColSettings As Collection
-   Dim oCSetting As i_C_Setting
+   Dim oCSetting As i_C_SETTINGS_Item
    Dim lSettingsCount As Long
 
    Dim bHasError As Boolean
@@ -200,8 +202,8 @@ End Function
 
 
 
-' Purpose: print project reference data to text file for version control
-' 0.x.0    xx.10.2023    gueleh    Adapted from imported code
+' Purpose: print project reference data to json file for version control
+' 0.3.0    26.10.2023    gueleh    Adapted from imported code
 Public Function bExportReferenceData() As Boolean
 
    Dim oC As VBIDE.Reference
@@ -259,35 +261,20 @@ Catch:
 End Function
 
 
-' Purpose: exports names and codenames of worksheets into text file for version control
-' 1.4.0    19.10.2023    gueleh    changed export from text to json
-' 0.14.0    31.01.2023    gueleh    Initially created
+' Purpose: exports names and codenames of worksheets into json file for version control
+' 0.3.0    26.10.2023    gueleh    Adapted from imported code
 Public Function bExportWorksheetNameData() As Boolean
-'Fixed, don't change
-   Dim oC_Me As New f_C_CallParams
-   oC_Me.s_prop_rw_ComponentName = s_m_COMPONENT_NAME
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterUnitTest oC_Me
 
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-   With oC_Me
-      .s_prop_rw_ProcedureName = "bExportWorksheetNameData" 'Name of the function
-      .b_prop_rw_SilentError = True 'False will display a message box - you should only do this on entry level
-      .s_prop_rw_ErrorMessage = "The export of name data failed." 'A message that properly informs the user and the devs (silent errors will be logged nonetheless)
-      .SetCallArgs "No args" 'If the sub takes args put the here like ("sExample:=" & sExample, "lExample:=" & lExample)
-   End With
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
-Try:
-   On Error GoTo Catch
-
-'>>>>>>> Your code here
    Dim oWks As Worksheet
    Dim iFileNumber As Integer
    Dim sFileFullPath As String
    Dim lCount As Long
    
+   Dim bHasError As Boolean
+
+Try:
+   On Error GoTo Catch
+
    sFileFullPath = ThisWorkbook.Path & "\" & "WorksheetNames.json"
    On Error Resume Next
    Kill sFileFullPath
@@ -314,67 +301,32 @@ Try:
    Print #iFileNumber, vbTab & "]"
    Print #iFileNumber, "}"
 
-'End of your code <<<<<<<
-
-'Fixed, don't change
 Finally:
    On Error Resume Next
-'>>>>>>> Your code here
-   'everything that must be executed regardless of an error or not
    Close #iFileNumber
-'End of your code <<<<<<<
-
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-'MAKE SURE TO REPLACE fbTemplateLowerLevel WITH THE NAME OF YOUR FUNCTION
-   If oC_Me.oC_prop_r_Error Is Nothing Then bExportWorksheetNameData = True 'reports execution as successful to caller
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
+   bExportWorksheetNameData = Not bHasError
    Exit Function
 Catch:
-   If oC_Me.oC_prop_r_Error Is Nothing _
-   Then f_p_RegisterError oC_Me, Err.Number, Err.Description
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterExecutionError oC_Me
-   If oC_f_p_FrameworkSettings.b_prop_r_DebugModeIsOn And Not oC_Me.b_prop_rw_ResumedOnce Then
-      oC_Me.b_prop_rw_ResumedOnce = True: Stop: Resume
-   Else
-      f_p_HandleError oC_Me: Resume Finally
-   End If
+   bHasError = True
+   Debug.Print Err.Number & ", " & Err.Description
+   Resume Finally
 
 End Function
 
-
-
-' Purpose: exports data of all names to a text file
-' 1.4.0    19.10.2023    gueleh    changed export from text to json
-' 0.12.0    16.08.2022    gueleh    Initially created
+' Purpose: exports data of all names to a json file
+' 0.3.0    26.10.2023    gueleh    Adapted from imported code
 Public Function bExportNameData() As Boolean
-'Fixed, don't change
-   Dim oC_Me As New f_C_CallParams
-   oC_Me.s_prop_rw_ComponentName = s_m_COMPONENT_NAME
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterUnitTest oC_Me
-
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-   With oC_Me
-      .s_prop_rw_ProcedureName = "bExportNameData" 'Name of the function
-      .b_prop_rw_SilentError = True 'False will display a message box - you should only do this on entry level
-      .s_prop_rw_ErrorMessage = "The export of name data failed." 'A message that properly informs the user and the devs (silent errors will be logged nonetheless)
-      .SetCallArgs "No args" 'If the sub takes args put the here like ("sExample:=" & sExample, "lExample:=" & lExample)
-   End With
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
-Try:
-   On Error GoTo Catch
-
-'>>>>>>> Your code here
+   
    Dim oName As Name
    Dim iFileNumber As Integer
    Dim sFileFullPath As String
    Dim lCount As Long
    
+   Dim bHasError As Boolean
+
+Try:
+   On Error GoTo Catch
+
    sFileFullPath = ThisWorkbook.Path & "\" & "Names.json"
    On Error Resume Next
    Kill sFileFullPath
@@ -408,64 +360,32 @@ Try:
    Print #iFileNumber, vbTab & "]"
    Print #iFileNumber, "}"
 
-'End of your code <<<<<<<
-
-'Fixed, don't change
 Finally:
    On Error Resume Next
-'>>>>>>> Your code here
-   'everything that must be executed regardless of an error or not
    Close #iFileNumber
-'End of your code <<<<<<<
-
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-'MAKE SURE TO REPLACE fbTemplateLowerLevel WITH THE NAME OF YOUR FUNCTION
-   If oC_Me.oC_prop_r_Error Is Nothing Then bExportNameData = True 'reports execution as successful to caller
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
+   bExportNameData = Not bHasError
    Exit Function
 Catch:
-   If oC_Me.oC_prop_r_Error Is Nothing _
-   Then f_p_RegisterError oC_Me, Err.Number, Err.Description
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterExecutionError oC_Me
-   If oC_f_p_FrameworkSettings.b_prop_r_DebugModeIsOn And Not oC_Me.b_prop_rw_ResumedOnce Then
-      oC_Me.b_prop_rw_ResumedOnce = True: Stop: Resume
-   Else
-      f_p_HandleError oC_Me: Resume Finally
-   End If
+   bHasError = True
+   Debug.Print Err.Number & ", " & Err.Description
+   Resume Finally
 
 End Function
 
-' Purpose: exports all VB components of types worksheet, module, class module and form to the project folder
-' 0.12.0    16.08.2022    gueleh    Initially created
+' Purpose: exports all VB components of types worksheet, module,
+'     class module and form to the project folder
+' 0.3.0    26.10.2023    gueleh    Adapted from imported code
 Public Function bExportAllComponents() As Boolean
 
-'Fixed, don't change
-   Dim oC_Me As New f_C_CallParams
-   oC_Me.s_prop_rw_ComponentName = s_m_COMPONENT_NAME
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterUnitTest oC_Me
-
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-   With oC_Me
-      .s_prop_rw_ProcedureName = "bExportAllComponents" 'Name of the function
-      .b_prop_rw_SilentError = True 'False will display a message box - you should only do this on entry level
-      .s_prop_rw_ErrorMessage = "The export of components failed." 'A message that properly informs the user and the devs (silent errors will be logged nonetheless)
-      .SetCallArgs "No args" 'If the sub takes args put the here like ("sExample:=" & sExample, "lExample:=" & lExample)
-   End With
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
-Try:
-   On Error GoTo Catch
-
-'>>>>>>> Your code here
    Dim ocmpComponent As VBIDE.VBComponent
    Dim bExport As Boolean
    Dim sFileName As String
    
+   Dim bHasError As Boolean
+
+Try:
+   On Error GoTo Catch
+
    For Each ocmpComponent In ThisWorkbook.VBProject.VBComponents
       bExport = True
       sFileName = ocmpComponent.Name
@@ -485,33 +405,14 @@ Try:
       End If
       
    Next ocmpComponent
-'End of your code <<<<<<<
-
-'Fixed, don't change
 Finally:
    On Error Resume Next
-
-'>>>>>>> Your code here
-   'everything that must be executed regardless of an error or not
-'End of your code <<<<<<<
-
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'Your custom settings here
-'MAKE SURE TO REPLACE fbTemplateLowerLevel WITH THE NAME OF YOUR FUNCTION
-   If oC_Me.oC_prop_r_Error Is Nothing Then bExportAllComponents = True 'reports execution as successful to caller
-'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-'Fixed, don't change
+   bExportAllComponents = Not bHasError
    Exit Function
 Catch:
-   If oC_Me.oC_prop_r_Error Is Nothing _
-   Then f_p_RegisterError oC_Me, Err.Number, Err.Description
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterExecutionError oC_Me
-   If oC_f_p_FrameworkSettings.b_prop_r_DebugModeIsOn And Not oC_Me.b_prop_rw_ResumedOnce Then
-      oC_Me.b_prop_rw_ResumedOnce = True: Stop: Resume
-   Else
-      f_p_HandleError oC_Me: Resume Finally
-   End If
+   bHasError = True
+   Debug.Print Err.Number & ", " & Err.Description
+   Resume Finally
 
 End Function
 

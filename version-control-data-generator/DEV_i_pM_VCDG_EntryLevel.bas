@@ -1,4 +1,28 @@
-Attribute VB_Name = "DEV_i_pM_EntryLevel_VCDG"
+Attribute VB_Name = "DEV_i_pM_VCDG_EntryLevel"
+' Package: VersionControlDataGenerator
+'============================================================================================
+'   NAME:     DEV_i_pM_VCDG_EntryLevel
+'============================================================================================
+'   Purpose:  global settings required for version control data geneator
+'   Access:   Private
+'   Type:     Module
+'   Author:   Günther Lehner
+'   Contact:  guleh@pm.me
+'   GitHubID: gueleh
+'   Required:
+'   Usage: please refer to the guidance document and to the guidance directly
+'     in the code
+'--------------------------------------------------------------------------------------------
+'   VERSION HISTORY
+'   Version    Date    Developer    Changes
+'   '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' 0.2.0    25.10.2023    gueleh    Imported from FF2 and adapted
+'--------------------------------------------------------------------------------------------
+'   BACKLOG
+'   ''''''''''''''''''''
+'   none
+'============================================================================================
+
 Option Explicit
 Option Private Module
 
@@ -20,7 +44,7 @@ Public Sub DEV_i_p_ExportDataForVersionControl()
 Try:
    On Error GoTo Catch
    
-   Dim oC_VersionControlExport As New DEV_i_C_VersionControlExport
+   Dim oC_VersionControlExport As New DEV_i_C_VCDG_Export
    
    If b_i_p_VCDG_EXPORT_CODE_MODULES Then
          If Not _

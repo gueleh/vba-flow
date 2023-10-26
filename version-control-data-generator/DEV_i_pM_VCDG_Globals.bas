@@ -1,7 +1,7 @@
-Attribute VB_Name = "DEV_i_pM_Globals_VCDG"
+Attribute VB_Name = "DEV_i_pM_VCDG_Globals"
 ' Package: VersionControlDataGenerator
 '============================================================================================
-'   NAME:     i_pM_Globals_VersionControlDG
+'   NAME:     DEV_i_pM_VCDG_Globals
 '============================================================================================
 '   Purpose:  global settings required for version control data geneator
 '   Access:   Private
@@ -9,7 +9,7 @@ Attribute VB_Name = "DEV_i_pM_Globals_VCDG"
 '   Author:   Günther Lehner
 '   Contact:  guleh@pm.me
 '   GitHubID: gueleh
-'   Required:
+'   Required: this VCDG package requires the SETTINGS package to work
 '   Usage: please refer to the guidance document and to the guidance directly
 '     in the code
 '--------------------------------------------------------------------------------------------
@@ -26,8 +26,6 @@ Attribute VB_Name = "DEV_i_pM_Globals_VCDG"
 Option Explicit
 Option Private Module
 
-Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
-
 'DECLARATIONS
 
 'CONTRACT DEFINITION SETTINGS
@@ -35,13 +33,14 @@ Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
       'sheets and the range definition sheets - this means, you have to comply
       'with these settings when setting up the respective sheets.
       
-      'Adapt the constant values to meet your requirements.
-
    'Settings Sheet
+      'The Const values are set in function oCol_i_p_VCDG_SettingsSheets
+      'below as they are only required there
+      'If you need to change them, do it there
 
    'Range Definitions Sheet
       'The Const values are set in method bExportRangeContentData of
-      'DEV_i_C_VersionControlExport as they are only required there
+      'DEV_i_C_VCDG_Export as they are only required there
       'If you need to change them, do it there
 
 'DATA GENERATION SCOPE SETTINGS
@@ -80,7 +79,7 @@ Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
    Public Const b_i_p_VCDG_EXPORT_PROJECT_REFERENCES As Boolean = True
    
 ' Procedure Name: oCol_i_p_VCDG_SettingsSheets
-' Purpose: builds and returns a collection with worksheets which are treated as "settings sheets" during version control data generation
+' Purpose: builds and returns a collection with class instances for "settings sheets" during version control data generation
 ' Procedure Kind: Function
 ' Procedure Access: Public
 ' Return Type: Collection
@@ -98,12 +97,35 @@ Private Const s_m_COMPONENT_NAME As String = "i_pM_Globals_VersionControlDG"
 '------------------------------------------------------------------------------------
 Public Function oCol_i_p_VCDG_SettingsSheets() As Collection
 'Do not change
+   Const lROW_START As Long = 3
+   Const lCOL_ID As Long = 3
+   Const lCOL_NAME As Long = 1
+   Const lCOL_VALUE As Long = 2
+   
    Dim oCol As New Collection
+   Dim oC As i_C_SETTINGS_Sheet
+   
    With oCol
 'REMOVE THE DEMO ENTRIES
-      .Add wksDemoRangeDefSheet
-      .Add wksDemoSettingsSheet
-'ADD YOUR SETTINGS SHEETS TO THE COLLECTION HERE
+      ' Please note that in these demo code lines the class instances are only
+      ' added to the collection if bConstruct executes without an error.
+      ' You may chose to handle this differently, e.g. by raising an error.
+      
+      ' It is recommended to use the same structure in the range definition sheet
+      ' like in the settings sheet(s) - so that in addition to creating version control
+      ' data based on each cell of the defined ranges the respective settings are also
+      ' written into version control data.
+      Set oC = New i_C_SETTINGS_Sheet
+      If oC.bConstruct( _
+         wksDemoRangeDefSheet, lROW_START, lCOL_ID, lCOL_NAME, lCOL_VALUE _
+      ) Then .Add oC
+      
+      Set oC = New i_C_SETTINGS_Sheet
+      If oC.bConstruct( _
+         wksDemoSettingsSheet, lROW_START, lCOL_ID, lCOL_NAME, lCOL_VALUE _
+      ) Then .Add oC
+      
+'ADD YOUR SETTING SHEET CLASS INSTANCES TO THE COLLECTION HERE
 
 
 'Do not change

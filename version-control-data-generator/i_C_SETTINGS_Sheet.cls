@@ -2,14 +2,14 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "i_C_SettingsSheet"
+Attribute VB_Name = "i_C_SETTINGS_Sheet"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-' CORE, do not change or remove
+' Package: SETTINGS (allowing to work with a settings sheet)
 '============================================================================================
-'   NAME:     f_C_SettingsSheet
+'   NAME:     i_C_SETTINGS_Sheet
 '============================================================================================
 '   Purpose:  gets settings from a settings sheet which fulfills the structural contract
 '   Access:   Public
@@ -23,15 +23,13 @@ Attribute VB_Exposed = False
 '   VERSION HISTORY
 '   Version    Date    Developer    Changes
 '   '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'   1.3.0    18.10.2023    gueleh    Initially created
+' 0.2.0    26.10.2023    gueleh    Imported from FF2 and renamed
 '--------------------------------------------------------------------------------------------
 '   BACKLOG
 '   ''''''''''''''''''''
 '   none
 '============================================================================================
 Option Explicit
-
-Private Const s_m_COMPONENT_NAME As String = "f_C_SettingsSheet"
 
 Private oWks_m_Settings As Worksheet
 Private l_m_RowStart As Long
@@ -62,7 +60,7 @@ End Property
 ' Usage:
 '------------------------------------------------------------------------------------
 ' Version   Date      Developer   Changes
-' 1.3.0    18.10.2023    gueleh  Initially created
+' 0.3.0    26.10.2023    gueleh    Adapted from FF2 code
 '------------------------------------------------------------------------------------
 ' Backlog:
 ' None
@@ -76,53 +74,24 @@ Public Function bConstruct _
    ByVal lColValue As Long _
 ) As Boolean
 
-'Fixed, don't change
-   Dim oC_Me As New f_C_CallParams: oC_Me.s_prop_rw_ComponentName = s_m_COMPONENT_NAME: If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterUnitTest oC_Me
-'>>>>>>> Your custom settings here
-   With oC_Me
-      .s_prop_rw_ProcedureName = "bConstruct" 'Name of the function
-      .b_prop_rw_SilentError = True 'False will display a message box - you should only do this on entry level
-      .s_prop_rw_ErrorMessage = "Construction of settings sheet failed." 'A message that properly informs the user and the devs (silent errors will be logged nonetheless)
-      .SetCallArgs "oWks.CodeName:=" & oWks.CodeName & ", lRowStart:=" & lRowStart & ", lColID:=" & lColID & ", lColName:=" & lColName & ", lColValue:=" & lColValue 'If the sub takes args put the here like ("sExample:=" & sExample, "lExample:=" & lExample)
-   End With
+   Dim bHasError As Boolean
 
-'Fixed, don't change
 Try: On Error GoTo Catch
 
-'>>>>>>> Your code here
    Set oWks_m_Settings = oWks
    l_m_RowStart = lRowStart
    l_m_ColID = lColID
    l_m_ColName = lColName
    l_m_ColValue = lColValue
-'End of your code <<<<<<<
 
-'Fixed, don't change
 Finally: On Error Resume Next
-
-'>>>>>>> Your code here
-'End of your code <<<<<<<
-
-'>>>>>>> Your custom settings here
-   If oC_Me.oC_prop_r_Error Is Nothing Then bConstruct = True 'reports execution as successful to caller
-
-'Fixed, don't change
+   bConstruct = Not bHasError
    Exit Function
-HandleError: af_pM_ErrorHandling.af_p_Hook_ErrorHandling_LowerLevel
 
-'>>>>>>> Your code here
-'End of your code <<<<<<<
-
-'Fixed, don't change
-   Resume Finally
 Catch:
-   If oC_Me.oC_prop_r_Error Is Nothing Then f_p_RegisterError oC_Me, Err.Number, Err.Description
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterExecutionError oC_Me
-   If oC_f_p_FrameworkSettings.b_prop_r_DebugModeIsOn And Not oC_Me.b_prop_rw_ResumedOnce Then
-      oC_Me.b_prop_rw_ResumedOnce = True: Stop: Resume
-   Else
-      f_p_HandleError oC_Me: GoTo HandleError
-   End If
+   bHasError = True
+   Debug.Print Err.Number & ", " & Err.Description
+   Resume Finally
 End Function
 
 ' Procedure Name: bGetSettingsFromSettingsSheet
@@ -138,7 +107,7 @@ End Function
 ' Usage:
 '------------------------------------------------------------------------------------
 ' Version   Date      Developer   Changes
-' 1.3.0    18.10.2023    gueleh  Initially created
+' 0.3.0    26.10.2023    gueleh    Adapted from FF2 code
 '------------------------------------------------------------------------------------
 ' Backlog:
 ' None
@@ -148,29 +117,19 @@ Public Function bGetSettingsFromSettingsSheet _
    ByRef oCol_Settings As Collection _
 ) As Boolean
 
-'Fixed, don't change
-   Dim oC_Me As New f_C_CallParams: oC_Me.s_prop_rw_ComponentName = s_m_COMPONENT_NAME: If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterUnitTest oC_Me
-'>>>>>>> Your custom settings here
-   With oC_Me
-      .s_prop_rw_ProcedureName = "bGetSettingsFromSettingsSheet" 'Name of the function
-      .b_prop_rw_SilentError = True 'False will display a message box - you should only do this on entry level
-      .s_prop_rw_ErrorMessage = "Getting settings failed." 'A message that properly informs the user and the devs (silent errors will be logged nonetheless)
-      .SetCallArgs "No args"
-   End With
-
-'Fixed, don't change
-Try: On Error GoTo Catch
-
-'>>>>>>> Your code here
-   Dim oCSetting As f_C_Setting
+   Dim oCSetting As i_C_SETTINGS_Item
    Dim lRow As Long
    Dim sID, sName As String
-   
+
+   Dim bHasError As Boolean
+
+Try: On Error GoTo Catch
+
    For lRow = l_m_RowStart To oWks_m_Settings.UsedRange.Rows.Count + l_m_RowStart
       sID = CStr(oWks_m_Settings.Cells(lRow, l_m_ColID).FormulaLocal)
       sName = CStr(oWks_m_Settings.Cells(lRow, l_m_ColName).FormulaLocal)
       If Len(sID) > 0 And Len(sName) > 0 Then
-         Set oCSetting = New f_C_Setting
+         Set oCSetting = New i_C_SETTINGS_Item
          oCSetting.sID = sID
          oCSetting.sName = sName
          oCSetting.sValue = CStr(oWks_m_Settings.Cells(lRow, l_m_ColValue).Value2)
@@ -179,34 +138,14 @@ Try: On Error GoTo Catch
       End If
    Next lRow
    
-'End of your code <<<<<<<
-
-'Fixed, don't change
 Finally: On Error Resume Next
-
-'>>>>>>> Your code here
-'End of your code <<<<<<<
-
-'>>>>>>> Your custom settings here
-   If oC_Me.oC_prop_r_Error Is Nothing Then bGetSettingsFromSettingsSheet = True 'reports execution as successful to caller
-
-'Fixed, don't change
+   bGetSettingsFromSettingsSheet = Not bHasError
    Exit Function
-HandleError: af_pM_ErrorHandling.af_p_Hook_ErrorHandling_LowerLevel
 
-'>>>>>>> Your code here
-'End of your code <<<<<<<
-
-'Fixed, don't change
-   Resume Finally
 Catch:
-   If oC_Me.oC_prop_r_Error Is Nothing Then f_p_RegisterError oC_Me, Err.Number, Err.Description
-   If oC_f_p_FrameworkSettings.b_prop_rw_ThisIsATestRun Then f_p_RegisterExecutionError oC_Me
-   If oC_f_p_FrameworkSettings.b_prop_r_DebugModeIsOn And Not oC_Me.b_prop_rw_ResumedOnce Then
-      oC_Me.b_prop_rw_ResumedOnce = True: Stop: Resume
-   Else
-      f_p_HandleError oC_Me: GoTo HandleError
-   End If
+   bHasError = True
+   Debug.Print Err.Number & ", " & Err.Description
+   Resume Finally
 End Function
 
 

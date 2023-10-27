@@ -104,5 +104,3 @@ Catch:
    sErrorMessage = sErrorMessage & Err.Description & vbNewLine
    Resume Next
 End Sub
-
-

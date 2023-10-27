@@ -1,0 +1,10 @@
+{
+	"wksDemoRangeDefSheet": [
+		{
+		"id": "a_named_rng_VersionControlDemo",
+		"name": "Contents of README",
+		"value2": "isValid:=WAHR;numberOfRows:=20;numberOfColumns:=1;anchorRow:=1;anchorColumn:=1",
+		"formulaLocal": "=VERKETTEN(\"isValid:=\"&NICHT(ISTFEHLER(D3));\";\";\"numberOfRows:=\"&D3;\";\";\"numberOfColumns:=\"&E3;\";\";\"anchorRow:=\"&F3;\";\";\"anchorColumn:=\"&G3)"
+		}
+	]
+}

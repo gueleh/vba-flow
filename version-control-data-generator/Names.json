@@ -1,0 +1,25 @@
+{
+	"names": [
+		{
+		"name": "a_named_cell_s_g_VersionDate",
+		"refersTo": "='Demo Settings Sheet'!$B$4",
+		"parentName": "VersionControlDataGenerator.xlsm",
+		"comment": "",
+		"macroType": "-4142"
+		},
+		{
+		"name": "a_named_cell_s_g_VersionNumber",
+		"refersTo": "='Demo Settings Sheet'!$B$3",
+		"parentName": "VersionControlDataGenerator.xlsm",
+		"comment": "",
+		"macroType": "-4142"
+		},
+		{
+		"name": "a_named_rng_VersionControlDemo",
+		"refersTo": "=README!$A$1:$A$20",
+		"parentName": "VersionControlDataGenerator.xlsm",
+		"comment": "",
+		"macroType": "-4142"
+		}
+	]
+}

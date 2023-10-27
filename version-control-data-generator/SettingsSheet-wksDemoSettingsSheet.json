@@ -1,0 +1,16 @@
+{
+	"wksDemoSettingsSheet": [
+		{
+		"id": "a_named_cell_s_g_VersionNumber",
+		"name": "Version Number",
+		"value2": "0.4.0",
+		"formulaLocal": "0.4.0"
+		}
+		{
+		"id": "a_named_cell_s_g_VersionDate",
+		"name": "Version Date YYYY-MM-DD",
+		"value2": "2023-10-27",
+		"formulaLocal": "2023-10-27"
+		},
+	]
+}

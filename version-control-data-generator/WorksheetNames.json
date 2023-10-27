@@ -1,0 +1,22 @@
+{
+	"worksheets": [
+		{
+		"codeName": "wksReadMe",
+		"name": "README",
+		"usedRangeRowsCountLarge": "20",
+		"usedRangeColumnsCountLarge": "1"
+		},
+		{
+		"codeName": "wksDemoSettingsSheet",
+		"name": "Demo Settings Sheet",
+		"usedRangeRowsCountLarge": "4",
+		"usedRangeColumnsCountLarge": "4"
+		},
+		{
+		"codeName": "wksDemoRangeDefSheet",
+		"name": "Demo Range Definition Sheet",
+		"usedRangeRowsCountLarge": "3",
+		"usedRangeColumnsCountLarge": "7"
+		}
+	]
+}

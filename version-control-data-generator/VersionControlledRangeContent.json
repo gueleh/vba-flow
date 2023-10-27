@@ -1,0 +1,134 @@
+{
+	"a_named_rng_VersionControlDemo": [
+		{
+			"name": "Contents of README",
+			"worksheetCodeName": "wksReadMe",
+			"rowsCount": "20",
+			"columnsCount": "1",
+			"anchorRow": "1",
+			"anchorColum": "1",
+			"cellContents": [
+				{
+					"rowNumber": "1",
+					"columnNumber": "1",
+					"value2": "Export Data for Version Control",
+					"formulaLocal": "Export Data for Version Control"
+				},
+				{
+					"rowNumber": "2",
+					"columnNumber": "1",
+					"value2": "Features:",
+					"formulaLocal": "Features:"
+				},
+				{
+					"rowNumber": "3",
+					"columnNumber": "1",
+					"value2": "Automatically exports all VB components, a text file with the references to required libraries, a text file with the defined names in the workbook, a text file with the sheet names and sheet codenames.",
+					"formulaLocal": "Automatically exports all VB components, a text file with the references to required libraries, a text file with the defined names in the workbook, a text file with the sheet names and sheet codenames."
+				},
+				{
+					"rowNumber": "4",
+					"columnNumber": "1",
+					"value2": "Destination is the folder of the executing workbook.",
+					"formulaLocal": "Destination is the folder of the executing workbook."
+				},
+				{
+					"rowNumber": "5",
+					"columnNumber": "1",
+					"value2": "These exported data can be submitted to git along with the workbook, to allow a bit of version control. (the name of the workbook should not change)",
+					"formulaLocal": "These exported data can be submitted to git along with the workbook, to allow a bit of version control. (the name of the workbook should not change)"
+				},
+				{
+					"rowNumber": "6",
+					"columnNumber": "1",
+					"value2": "",
+					"formulaLocal": ""
+				},
+				{
+					"rowNumber": "7",
+					"columnNumber": "1",
+					"value2": "Requires:",
+					"formulaLocal": "Requires:"
+				},
+				{
+					"rowNumber": "8",
+					"columnNumber": "1",
+					"value2": "VBIDE",
+					"formulaLocal": "VBIDE"
+				},
+				{
+					"rowNumber": "9",
+					"columnNumber": "1",
+					"value2": "",
+					"formulaLocal": ""
+				},
+				{
+					"rowNumber": "10",
+					"columnNumber": "1",
+					"value2": "Modules:",
+					"formulaLocal": "Modules:"
+				},
+				{
+					"rowNumber": "11",
+					"columnNumber": "1",
+					"value2": "DEV_i_pM_EntryLevel.bas",
+					"formulaLocal": "DEV_i_pM_EntryLevel.bas"
+				},
+				{
+					"rowNumber": "12",
+					"columnNumber": "1",
+					"value2": "DEV_i_C_VersionControlExport.cls",
+					"formulaLocal": "DEV_i_C_VersionControlExport.cls"
+				},
+				{
+					"rowNumber": "13",
+					"columnNumber": "1",
+					"value2": "",
+					"formulaLocal": ""
+				},
+				{
+					"rowNumber": "14",
+					"columnNumber": "1",
+					"value2": "Installation:",
+					"formulaLocal": "Installation:"
+				},
+				{
+					"rowNumber": "15",
+					"columnNumber": "1",
+					"value2": "Export the two modules.",
+					"formulaLocal": "Export the two modules."
+				},
+				{
+					"rowNumber": "16",
+					"columnNumber": "1",
+					"value2": "Import the two modules into your project.",
+					"formulaLocal": "Import the two modules into your project."
+				},
+				{
+					"rowNumber": "17",
+					"columnNumber": "1",
+					"value2": "",
+					"formulaLocal": ""
+				},
+				{
+					"rowNumber": "18",
+					"columnNumber": "1",
+					"value2": "Usage:",
+					"formulaLocal": "Usage:"
+				},
+				{
+					"rowNumber": "19",
+					"columnNumber": "1",
+					"value2": "Run "DEV_ExportDataForVersionControl" in module "DEV_i_pM_EntryLevel".",
+					"formulaLocal": "Run \"DEV_ExportDataForVersionControl\" in module \"DEV_i_pM_EntryLevel\"."
+				},
+				{
+					"rowNumber": "20",
+					"columnNumber": "1",
+					"value2": "Please remove the modules and the reference to the VBIDE library in production versions of your tool.",
+					"formulaLocal": "Please remove the modules and the reference to the VBIDE library in production versions of your tool."
+				}
+			]
+		}
+	]
+}

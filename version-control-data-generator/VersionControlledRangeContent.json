@@ -3,7 +3,7 @@
 		{
 			"name": "Contents of README",
 			"worksheetCodeName": "wksReadMe",
-			"rowsCount": "20",
+			"rowsCount": "27",
 			"columnsCount": "1",
 			"anchorRow": "1",
 			"anchorColum": "1",
@@ -23,8 +23,8 @@
 				{
 					"rowNumber": "3",
 					"columnNumber": "1",
-					"value2": "Automatically exports all VB components, a text file with the references to required libraries, a text file with the defined names in the workbook, a text file with the sheet names and sheet codenames.",
-					"formulaLocal": "Automatically exports all VB components, a text file with the references to required libraries, a text file with the defined names in the workbook, a text file with the sheet names and sheet codenames."
+					"value2": "Automatically exports all VB components and JSON files for selected worksheet data, contents of selected defined ranges, settings in settings sheets and references in VBA (i.e. the activated libraries).",
+					"formulaLocal": "Automatically exports all VB components and JSON files for selected worksheet data, contents of selected defined ranges, settings in settings sheets and references in VBA (i.e. the activated libraries)."
 				},
 				{
 					"rowNumber": "4",
@@ -53,8 +53,8 @@
 				{
 					"rowNumber": "8",
 					"columnNumber": "1",
-					"value2": "VBIDE",
-					"formulaLocal": "VBIDE"
+					"value2": "VBIDE ("Microsoft Visual Basic for Applications Extensibility") - export of VB components can be deactivated if not possible due to missing library or due to security settings",
+					"formulaLocal": "VBIDE (\"Microsoft Visual Basic for Applications Extensibility\") - export of VB components can be deactivated if not possible due to missing library or due to security settings"
 				},
 				{
 					"rowNumber": "9",
@@ -71,62 +71,104 @@
 				{
 					"rowNumber": "11",
 					"columnNumber": "1",
-					"value2": "DEV_i_pM_EntryLevel.bas",
-					"formulaLocal": "DEV_i_pM_EntryLevel.bas"
+					"value2": "DEV_i_pM_VCDG_EntryLevel.bas",
+					"formulaLocal": "DEV_i_pM_VCDG_EntryLevel.bas"
 				},
 				{
 					"rowNumber": "12",
 					"columnNumber": "1",
-					"value2": "DEV_i_C_VersionControlExport.cls",
-					"formulaLocal": "DEV_i_C_VersionControlExport.cls"
+					"value2": "DEV_i_pM_VCDG_Globals.bas",
+					"formulaLocal": "DEV_i_pM_VCDG_Globals.bas"
 				},
 				{
 					"rowNumber": "13",
+					"columnNumber": "1",
+					"value2": "DEV_i_C_VCDG_Export.cls",
+					"formulaLocal": "DEV_i_C_VCDG_Export.cls"
+				},
+				{
+					"rowNumber": "14",
+					"columnNumber": "1",
+					"value2": "DEV_i_C_VCDG_Range.cls",
+					"formulaLocal": "DEV_i_C_VCDG_Range.cls"
+				},
+				{
+					"rowNumber": "15",
+					"columnNumber": "1",
+					"value2": "DEV_i_C_VCDG_Ranges.cls",
+					"formulaLocal": "DEV_i_C_VCDG_Ranges.cls"
+				},
+				{
+					"rowNumber": "16",
+					"columnNumber": "1",
+					"value2": "i_C_SETTINGS_Item.cls",
+					"formulaLocal": "i_C_SETTINGS_Item.cls"
+				},
+				{
+					"rowNumber": "17",
+					"columnNumber": "1",
+					"value2": "i_C_SETTINGS_Sheet.cls",
+					"formulaLocal": "i_C_SETTINGS_Sheet.cls"
+				},
+				{
+					"rowNumber": "18",
 					"columnNumber": "1",
 					"value2": "",
 					"formulaLocal": ""
 				},
 				{
-					"rowNumber": "14",
+					"rowNumber": "19",
 					"columnNumber": "1",
 					"value2": "Installation:",
 					"formulaLocal": "Installation:"
 				},
 				{
-					"rowNumber": "15",
+					"rowNumber": "20",
 					"columnNumber": "1",
-					"value2": "Export the two modules.",
-					"formulaLocal": "Export the two modules."
+					"value2": "Import the modules specified above into your project.",
+					"formulaLocal": "Import the modules specified above into your project."
 				},
 				{
-					"rowNumber": "16",
+					"rowNumber": "21",
 					"columnNumber": "1",
-					"value2": "Import the two modules into your project.",
-					"formulaLocal": "Import the two modules into your project."
+					"value2": "Remove the references to the demo contents from DEV_i_pM_VCDG_Globals.",
+					"formulaLocal": "Remove the references to the demo contents from DEV_i_pM_VCDG_Globals."
 				},
 				{
-					"rowNumber": "17",
+					"rowNumber": "22",
 					"columnNumber": "1",
 					"value2": "",
 					"formulaLocal": ""
 				},
 				{
-					"rowNumber": "18",
+					"rowNumber": "23",
 					"columnNumber": "1",
 					"value2": "Usage:",
 					"formulaLocal": "Usage:"
 				},
 				{
-					"rowNumber": "19",
+					"rowNumber": "24",
 					"columnNumber": "1",
-					"value2": "Run "DEV_ExportDataForVersionControl" in module "DEV_i_pM_EntryLevel".",
-					"formulaLocal": "Run \"DEV_ExportDataForVersionControl\" in module \"DEV_i_pM_EntryLevel\"."
+					"value2": "Set the scope of the export in DEV_i_pM_VCDG_Globals.bas by setting the values of the const booleans.",
+					"formulaLocal": "Set the scope of the export in DEV_i_pM_VCDG_Globals.bas by setting the values of the const booleans."
 				},
 				{
-					"rowNumber": "20",
+					"rowNumber": "25",
 					"columnNumber": "1",
-					"value2": "Please remove the modules and the reference to the VBIDE library in production versions of your tool.",
-					"formulaLocal": "Please remove the modules and the reference to the VBIDE library in production versions of your tool."
+					"value2": "If it is not possible to use VBIDE for exporting the VB Components, e.g. due to security settings of your organisation, you can export them manually.",
+					"formulaLocal": "If it is not possible to use VBIDE for exporting the VB Components, e.g. due to security settings of your organisation, you can export them manually."
+				},
+				{
+					"rowNumber": "26",
+					"columnNumber": "1",
+					"value2": "For Settings version control and version control for contents of ranges with defined names, you need respective sheets, please refer to the demo sheets. If you want to use a different structure for these sheets, you need to change the respective const values, see the globals module.",
+					"formulaLocal": "For Settings version control and version control for contents of ranges with defined names, you need respective sheets, please refer to the demo sheets. If you want to use a different structure for these sheets, you need to change the respective const values, see the globals module."
+				},
+				{
+					"rowNumber": "27",
+					"columnNumber": "1",
+					"value2": "The sub in module DEV_i_pM_VCDG_EntryLevel executes the export.",
+					"formulaLocal": "The sub in module DEV_i_pM_VCDG_EntryLevel executes the export."
 				}
 			]
 		}

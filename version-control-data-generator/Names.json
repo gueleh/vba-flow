@@ -16,7 +16,7 @@
 		},
 		{
 		"name": "a_named_rng_VersionControlDemo",
-		"refersTo": "=README!$A$1:$A$20",
+		"refersTo": "=README!$A$1:$A$27",
 		"parentName": "VersionControlDataGenerator.xlsm",
 		"comment": "",
 		"macroType": "-4142"

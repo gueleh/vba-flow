@@ -39,7 +39,6 @@ Public Function bExportRangeContentData() As Boolean
    Const lROW_START As Long = 3
    Const lCOL_ID As Long = 3
    Const lCOL_NAME As Long = 1
-   Const lCOL_VALUE As Long = 2
 
    Dim oWks As Worksheet
    Dim iFileNumber As Integer

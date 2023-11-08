@@ -4,6 +4,9 @@ This standalone solution allows you to easily generate data which can be used fo
 
 # Version History
 
+## 1.1.0 - 20231027
++ removed dead code
+
 ## 1.0.0 - 20231027
 + added quick guidance in the workbook
 

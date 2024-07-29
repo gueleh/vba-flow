@@ -1,6 +1,13 @@
 {
 	"names": [
 		{
+		"name": "_xlfn.SINGLE",
+		"category": "All",
+		"parentName": "VersionControlDataGenerator.xlsm",
+		"comment": "",
+		"macroType": "1"
+		},
+		{
 		"name": "a_named_cell_s_g_VersionDate",
 		"refersTo": "='Demo Settings Sheet'!$B$4",
 		"parentName": "VersionControlDataGenerator.xlsm",

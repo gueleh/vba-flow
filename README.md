@@ -19,6 +19,9 @@ Unless otherwise specified, you can use these solutions freely as long as you do
 ### Basic Semi-Automated Testing
 With this small solution you can easily write and run tests when working with Excel VBA. It is not a test suite, it is not fully automated, but it is small and easy to use, with the potential to add a lot of value to your development experience. You can find this solution in the subfolder https://github.com/gueleh/vba-flow/tree/main/basic-semi-automated-testing.
 
+### SharePoint Drive Mapper
+One small class to temporarily mount a drive based on a network path without credentials, i.e. the user running the code must have access rights via the machine he runs the code on. Used to allow for file and folder processing with the standard file system. You can this this solution in the subfolder https://github.com/gueleh/vba-flow/tree/main/sharepoint-drive-mapper.
+
 ### User Defined Functions
 A package with some user defined functions, i.e. functions that can be used in cells. Also includes a class for registering a user defined function in the function wizard of Excel and applies this to the functions of the package. You can find this solution in the subfolder https://github.com/gueleh/vba-flow/tree/main/user-defined-functions.
 

@@ -6,5 +6,8 @@ Only works in Excel for Windows.
 
 ## Version History
 
+### 1.0.1 250310
++ added force param to unmount drive, optional, defaulting to true
+
 ### 1.0.0 240729
 + Initially created

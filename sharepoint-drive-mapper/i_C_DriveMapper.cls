@@ -74,10 +74,10 @@ Catch:
 End Function
 
 ' Purpose: unmaps the drive, i.e. it is unmounted
-Private Sub mUnmapDrive()
+Private Sub mUnmapDrive(Optional ByVal bForceRemoval As Boolean = True)
     If Not o_m_MappedDrive Is Nothing Then
         If o_m_MappedDrive.IsReady Then
-            o_m_Network.RemoveNetworkDrive o_m_MappedDrive.DriveLetter & ":"
+            o_m_Network.RemoveNetworkDrive o_m_MappedDrive.DriveLetter & ":", bForceRemoval
         End If
         Set o_m_MappedDrive = Nothing
     End If
